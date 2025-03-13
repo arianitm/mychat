@@ -7,12 +7,19 @@ import { Link } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Dialog from "react-native-dialog";
 import { useUser } from "@/hooks/context/UserContext";
+import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Page = () => {
   const groups = useQuery(api.groups.get) || [];
 
   const [name, setName] = useState("");
   const [visible, setVisible] = useState(false);
+
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [selectedGroupId, setSelectedGroupId] = useState(null);
+
+  const navigation = useNavigation();
 
   // Check if the user has a name, otherwise show modal
   useEffect(() => {
@@ -39,7 +46,10 @@ const Page = () => {
     setVisible(false);
   };
 
-  // console.log(name, "name");
+  const handleQRCodeClick = (groupId: any) => {
+    setSelectedGroupId(groupId);
+    setShowQRModal(true);
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -100,6 +110,16 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
+  },
+  qrButton: {
+    marginLeft: 10,
+    padding: 8,
+    backgroundColor: "#eaf2f8",
+    borderRadius: 5,
+  },
+  qrButtonText: {
+    color: "white",
+    fontSize: 14,
   },
 });
 
