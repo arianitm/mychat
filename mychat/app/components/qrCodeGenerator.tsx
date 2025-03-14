@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 import { View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { useChatContext } from "@/hooks/context/chatContext";
 
-const QRCodeGenerator = ({ id }: { id: string }) => {
-  const [chatId, setChatId] = useState<string | null>(null);
+const QRCodeGenerator = () => {
+  const { chatId } = useChatContext();
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    const loadChatId = async () => {
-      const id = await AsyncStorage.getItem("currentChatId");
-      setChatId(id);
-    };
-    loadChatId();
-  }, []);
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "Scan QR Code" });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -30,4 +28,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
 export default QRCodeGenerator;

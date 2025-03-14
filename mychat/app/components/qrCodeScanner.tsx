@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { CameraView } from "expo-camera";
 import { useCameraPermissions } from "expo-camera";
 import { router } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
+
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "Scan QR Code" });
+  }, [navigation]);
 
   if (!permission) {
     return <View />;
@@ -28,7 +35,6 @@ export default function App() {
         style={styles.camera}
         facing="back"
         onBarcodeScanned={({ data }) => {
-          console.log("data", data);
           setTimeout(async () => {
             await router.push(`/(chat)/${data}`);
           }, 500);

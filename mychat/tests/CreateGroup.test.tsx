@@ -1,8 +1,7 @@
 import { render, fireEvent } from "@testing-library/react-native";
 import React from "react";
-import CreateGroup from "../../app/(modal)/createGroup"; // adjust the import path as necessary
+import CreateGroup from "../app/(modal)/createGroup";
 
-// Mock necessary modules
 jest.mock("expo-router", () => ({
   useRouter: jest.fn().mockReturnValue({
     back: jest.fn(),
@@ -54,8 +53,5 @@ describe("CreateGroup Component", () => {
 
     // Press the create button
     fireEvent.press(getByText("Create"));
-
-    // Here you would check if your mutation was called or navigation happened
-    // (You can mock the functions inside the component to check this)
   });
 });

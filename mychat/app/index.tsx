@@ -4,72 +4,27 @@ import { StyleSheet } from "react-native";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Link } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Dialog from "react-native-dialog";
-
-import useIncomingNotifications from "@/hooks/useIncomingNotifications";
-// import usePushNotifications from "@/hooks/usePushNotifications";
+import { useChatContext } from "@/hooks/context/chatContext";
 
 const Page = () => {
   const groups = useQuery(api.groups.get) || [];
+  const { userName, setUserName } = useChatContext();
+  const [visible, setVisible] = useState(!userName);
 
-  const [name, setName] = useState("");
-  const [visible, setVisible] = useState(false);
-
-  // const pushToken = usePushNotifications(); // Hook call here
-
-  // useEffect(() => {
-  //   if (pushToken) {
-  //     console.log("Push token:", pushToken); // Log to see if the token is being returned
-  //   } else {
-  //     console.log("No push token available 123432"); // Log if no token available
-  //   }
-  // }, [pushToken]); // Trigger this effect whenever pushToken changes
-
-  // const notification = useIncomingNotifications(); // Get the incoming notification
-
-  // useEffect(() => {
-  //   if (notification) {
-  //     // You can handle the notification here
-  //     console.log("New notification received:", notification);
-  //     // You can trigger navigation or any other action based on the notification content
-  //   }
-  // }, [notification]);
-
-  // Check if the user has a name, otherwise show modal
   useEffect(() => {
-    const loadUser = async () => {
-      const user = await AsyncStorage.getItem("user");
-      console.log(user, "user");
-      if (!user) {
-        setTimeout(() => {
-          setVisible(true);
-        }, 100);
-      } else {
-        setName(user);
-      }
-    };
-    loadUser();
-  }, []);
+    if (!userName) setVisible(true);
+  }, [userName]);
 
-  // Safe the user name to async storage
   const setUser = async () => {
-    let r = (Math.random() + 1).toString(36).substring(7);
-    const userName = `${name}#${r}`;
-    await AsyncStorage.setItem("user", userName);
-    setName(userName);
+    let randomTag = (Math.random() + 1).toString(36).substring(7);
+    const newUserName = `${userName}#${randomTag}`;
+    setUserName(newUserName);
     setVisible(false);
   };
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <View>
-        {notification ? (
-          <Text>You have a new notification!</Text>
-        ) : (
-          <Text>No new notifications</Text>
-        )}
-      </View> */}
       <ScrollView style={styles.container}>
         {groups.map((group) => (
           <Link
@@ -99,7 +54,7 @@ const Page = () => {
         <Dialog.Description>
           Please insert a name to start chatting.
         </Dialog.Description>
-        <Dialog.Input onChangeText={setName} />
+        <Dialog.Input onChangeText={setUserName} />
         <Dialog.Button label="Set name" onPress={setUser} />
       </Dialog.Container>
     </View>
@@ -107,11 +62,7 @@ const Page = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "#eaf2f8",
-  },
+  container: { flex: 1, padding: 10, backgroundColor: "#eaf2f8" },
   group: {
     flexDirection: "row",
     gap: 15,
@@ -124,10 +75,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2,
     elevation: 3,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
+    shadowOffset: { width: 0, height: 1 },
   },
 });
 
