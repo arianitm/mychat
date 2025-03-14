@@ -19,8 +19,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       const storedUser = await AsyncStorage.getItem("user");
       const storedChatId = await AsyncStorage.getItem("currentChatId");
 
-      //   if (storedUser) setUserName(storedUser);
-      setUserName(storedUser);
+      if (storedUser) setUserName(storedUser);
       if (storedChatId) setChatId(storedChatId);
     };
 

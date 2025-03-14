@@ -1,50 +1,29 @@
-# Welcome to your Expo app 👋
+# Welcome to your MyChat app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a real-time chat app built with React Native and Convex.
+
+Features:
+Group Chat: Users can create group chats, each with a unique ID.
+QR Code Sharing: Generate a QR code for a group chat and share it with others.
+Real-Time Messaging: Messages update instantly using Convex.
+Push Notifications: Get notified when someone sends a message in a chat you're part of.
 
 ## Get started
 
-1. Install dependencies
+Make sure you have the following installed:
 
-   ```bash
-   npm install
-   ```
+Node.js
+Expo CLI
+Convex CLI
+A mobile device or an emulator
 
-2. Start the app
+## Installation & Running the App
 
-   ```bash
-    npx expo start
-   ```
+git clone: gh repo clone arianitm/mychat
+cd <mychat>
 
-In the output, you'll find options to open the app in a
+Install dependencies: npm install
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Set up Convex: npx convex dev
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Start the Expo development server: npx expo start
