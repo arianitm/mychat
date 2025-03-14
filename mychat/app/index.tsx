@@ -1,14 +1,14 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Link } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Dialog from "react-native-dialog";
-import { useUser } from "@/hooks/context/UserContext";
-import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+
+import useIncomingNotifications from "@/hooks/useIncomingNotifications";
+// import usePushNotifications from "@/hooks/usePushNotifications";
 
 const Page = () => {
   const groups = useQuery(api.groups.get) || [];
@@ -16,10 +16,25 @@ const Page = () => {
   const [name, setName] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const [showQRModal, setShowQRModal] = useState(false);
-  const [selectedGroupId, setSelectedGroupId] = useState(null);
+  // const pushToken = usePushNotifications(); // Hook call here
 
-  const navigation = useNavigation();
+  // useEffect(() => {
+  //   if (pushToken) {
+  //     console.log("Push token:", pushToken); // Log to see if the token is being returned
+  //   } else {
+  //     console.log("No push token available 123432"); // Log if no token available
+  //   }
+  // }, [pushToken]); // Trigger this effect whenever pushToken changes
+
+  // const notification = useIncomingNotifications(); // Get the incoming notification
+
+  // useEffect(() => {
+  //   if (notification) {
+  //     // You can handle the notification here
+  //     console.log("New notification received:", notification);
+  //     // You can trigger navigation or any other action based on the notification content
+  //   }
+  // }, [notification]);
 
   // Check if the user has a name, otherwise show modal
   useEffect(() => {
@@ -46,13 +61,15 @@ const Page = () => {
     setVisible(false);
   };
 
-  const handleQRCodeClick = (groupId: any) => {
-    setSelectedGroupId(groupId);
-    setShowQRModal(true);
-  };
-
   return (
     <View style={{ flex: 1 }}>
+      {/* <View>
+        {notification ? (
+          <Text>You have a new notification!</Text>
+        ) : (
+          <Text>No new notifications</Text>
+        )}
+      </View> */}
       <ScrollView style={styles.container}>
         {groups.map((group) => (
           <Link
@@ -76,6 +93,7 @@ const Page = () => {
           </Link>
         ))}
       </ScrollView>
+
       <Dialog.Container visible={visible}>
         <Dialog.Title>Username required</Dialog.Title>
         <Dialog.Description>
@@ -110,16 +128,6 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-  },
-  qrButton: {
-    marginLeft: 10,
-    padding: 8,
-    backgroundColor: "#eaf2f8",
-    borderRadius: 5,
-  },
-  qrButtonText: {
-    color: "white",
-    fontSize: 14,
   },
 });
 

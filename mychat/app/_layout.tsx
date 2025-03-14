@@ -1,10 +1,7 @@
 import { Link, Stack } from "expo-router";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ConvexProvider, ConvexReactClient, useMutation } from "convex/react";
 import { TouchableOpacity, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { UserProvider } from "@/hooks/context/UserContext";
-import { useCameraPermissions } from "expo-camera";
-import QRCodeGenerator from "./QRCodeGenerator";
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
   unsavedChangesWarning: false,

@@ -51,17 +51,29 @@ const CreateGroup = () => {
     <KeyboardAvoidingView style={styles.container}>
       <Text style={styles.label}>Name</Text>
       <TextInput
+        accessibilityLabel="Name"
         style={[styles.textInput, errors.name && styles.errorInput]}
         value={name}
         onChangeText={handleNameChange}
       />
+
       {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
 
       <Text style={styles.label}>Description(Optional)</Text>
-      <TextInput style={styles.textInput} value={desc} onChangeText={setDesc} />
+      <TextInput
+        accessibilityLabel="Description(Optional)"
+        style={styles.textInput}
+        value={desc}
+        onChangeText={setDesc}
+      />
 
       <Text style={styles.label}>Icon (Optional)</Text>
-      <TextInput style={styles.textInput} value={icon} onChangeText={setIcon} />
+      <TextInput
+        accessibilityLabel="Icon (Optional)"
+        style={styles.textInput}
+        value={icon}
+        onChangeText={setIcon}
+      />
 
       <TouchableOpacity style={styles.button} onPress={onCreateGroup}>
         <Text style={styles.buttonText}>Create</Text>

@@ -12,5 +12,6 @@ export default defineSchema({
     group_id: v.id("groups"),
     user: v.string(),
     file: v.optional(v.string()),
+    // pushToken: v.optional(v.string()),
   }),
 });

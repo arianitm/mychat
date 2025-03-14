@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const QRCodeGenerator = ({ id }: { id: string }) => {
+  const [chatId, setChatId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadChatId = async () => {
+      const id = await AsyncStorage.getItem("currentChatId");
+      setChatId(id);
+    };
+    loadChatId();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <QRCode value={id} size={200} />
+      {chatId ? <QRCode value={chatId} size={200} /> : ""}
     </View>
   );
 };

@@ -19,6 +19,8 @@ import { useConvex, useMutation, useQuery } from "convex/react";
 import { StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+// import usePushNotifications from "@/hooks/usePushNotifications";
+
 const ChatPage = () => {
   const { chatid } = useLocalSearchParams();
   const [user, setUser] = useState<string | null>(null);
@@ -32,11 +34,14 @@ const ChatPage = () => {
 
   const listRef = useRef<FlatList>(null);
 
+  // const pushToken = usePushNotifications();
+
   useEffect(() => {
     const loadGroup = async () => {
       const groupInfo = await convex.query(api.groups.getGroup, {
         id: chatid as Id<"groups">,
       });
+      AsyncStorage.setItem("currentChatId", chatid as string);
       navigation.setOptions({ headerTitle: groupInfo?.name });
     };
     loadGroup();
@@ -57,10 +62,10 @@ const ChatPage = () => {
       group_id: chatid as Id<"groups">,
       content: newMessage,
       user: user || "AM",
+      // pushToken: pushToken, // Make sure this is being passed
     });
     setNewMessage("");
   };
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
